@@ -1,5 +1,5 @@
 // fetch all recipes from API
-export async function fetchData(endpoint: string) {
+export const fetchData = async (endpoint: string) => {
   try {
     const response = await fetch(endpoint)
     const data = await response.json()
