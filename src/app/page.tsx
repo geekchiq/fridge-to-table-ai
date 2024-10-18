@@ -32,8 +32,13 @@ export default function Home() {
     const recipeData = await getRecipes({
       ingredients,
       healthOptions,
-      dietPreference
+      dietPreference,
+      mealType
     })
+
+    if (!recipeData || recipeData.length === 0) {
+      alert('No Data Found')
+    }
 
     const newRecipeData: Recipe[] = []
     recipeData?.forEach((recipe) => {
