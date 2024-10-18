@@ -1,4 +1,4 @@
-import { fetchData } from '@/app/api/edamam/route'
+import { fetchData } from './app/api/edamam/route'
 
 const apiKey = process.env.NEXT_PUBLIC_EDAMAM_API_KEY
 const appId = process.env.NEXT_PUBLIC_EDAMAM_APP_ID

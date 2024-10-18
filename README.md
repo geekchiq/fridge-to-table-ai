@@ -1,5 +1,7 @@
 Recipe Finder App
 
+Live Version[https://fridge-to-table-ai.vercel.app](https://fridge-to-table-ai.vercel.app)
+
 ## Overview
 
 Find recipes based from avaiable ingredients
