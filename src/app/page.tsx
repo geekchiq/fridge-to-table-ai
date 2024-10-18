@@ -1,101 +1,103 @@
-import Image from "next/image";
+'use client'
+
+import { IngredientLine, Recipe, RecipeData } from '@/types/recipe'
+import React, { useState } from 'react'
+
+import FilterOptions from '@/app/components/FilterOptions'
+import Head from 'next/head'
+import IngredientInput from '@/app/components/IngredientInput'
+import RecipeList from '@/app/components/RecipeList'
+import { getRecipes } from '@/actions'
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [ingredients, setIngredients] = useState<string[]>([])
+  const [healthOptions, setHealthOptions] = useState<string[]>([])
+  const [dietPreference, setDietPreference] = useState<string>('')
+  const [mealType, setMealType] = useState<string>('')
+  const [recipes, setRecipes] = useState<Recipe[]>([])
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  function isCommonIngredient(arr1: string[], ingredient: string) {
+    const lowerArr1 = arr1.map((ingr: string) => ingr.toLowerCase())
+
+    // Check if any ingredient in arr1 is a substring of ingredient
+    for (const ingr1 of lowerArr1) {
+      if (ingredient.toLowerCase().indexOf(ingr1) > 0) {
+        return true
+      }
+    }
+    return false
+  }
+
+  const handleSearch = async () => {
+    const recipeData = await getRecipes({
+      ingredients,
+      healthOptions,
+      dietPreference
+    })
+
+    const newRecipeData: Recipe[] = []
+    recipeData?.forEach((recipe: RecipeData) => {
+      let existingCount = 0
+      const ingredientLines = recipe.ingredientLines
+      const newIngrLines: IngredientLine[] = []
+      ingredientLines?.forEach((ingr: string) => {
+        const existing = isCommonIngredient(ingredients, ingr)
+        if (existing) existingCount++
+        newIngrLines.push({
+          existing,
+          ingredient: ingr
+        })
+      })
+
+      // sort and move existing ingredients to top
+      newIngrLines.sort((a, b) =>
+        a.existing === b.existing ? 0 : a.existing ? -1 : 1
+      )
+
+      newRecipeData.push({
+        ...recipe,
+        ingredientLines: newIngrLines,
+        existingCount
+      })
+    })
+
+    // sort data to recipes with most common ingredients
+    newRecipeData.sort((a, b) => b.existingCount - a.existingCount)
+    setRecipes(newRecipeData)
+  }
+
+  return (
+    <div className="min-h-screen bg-lime-300">
+      <Head>
+        <title>Recipe Finder</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <main className="container mx-auto px-4 py-8">
+        <h1 className="text-4xl font-bold mb-8 text-center">Recipe Finder</h1>
+        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <IngredientInput
+            ingredients={ingredients}
+            setIngredients={setIngredients}
+          />
+          <FilterOptions
+            healthOptions={healthOptions}
+            setHealthOptions={setHealthOptions}
+            dietPreference={dietPreference}
+            setDietPreference={setDietPreference}
+            mealType={mealType}
+            setMealType={setMealType}
+          />
+          <button
+            onClick={handleSearch}
+            className="w-full bg-lime-500 text-white py-2 px-4 rounded-md hover:bg-lime-500 transition-colors disabled:bg-lime-100 disabled:cursor-not-allowed"
+            disabled={ingredients.length === 0}
           >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            Search Recipes
+          </button>
         </div>
+        {recipes.length > 0 && <RecipeList recipes={recipes} />}
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
-  );
+  )
 }
