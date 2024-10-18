@@ -1,6 +1,6 @@
-Recipe Finder App
+### Recipe Finder App
 
-Live Version[https://fridge-to-table-ai.vercel.app](https://fridge-to-table-ai.vercel.app)
+Live Version [https://fridge-to-table-ai.vercel.app](https://fridge-to-table-ai.vercel.app)
 
 ## Overview
 
@@ -19,7 +19,7 @@ Find recipes based from avaiable ingredients
 
 ## Getting Started
 
-1. Create an Edamam API account (https://developer.edamam.com/)[https://developer.edamam.com/]
+1. Create an Edamam API account (https://developer.edamam.com) [https://developer.edamam.com]
 2. Copy the API id and key to env below.
 
 ### Create .env.local File
