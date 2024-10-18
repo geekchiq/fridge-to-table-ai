@@ -1,4 +1,4 @@
-import { GET } from '@/app/api/edamam/route'
+import { fetchData } from '@/app/api/edamam'
 
 const apiKey = process.env.NEXT_PUBLIC_EDAMAM_API_KEY
 const appId = process.env.NEXT_PUBLIC_EDAMAM_APP_ID
@@ -26,6 +26,6 @@ export const getRecipes = async (
   if (dietPreference) {
     url = `${url}&diet=${dietPreference}`
   }
-  const data = await GET(url)
+  const data = await fetchData(url)
   return data
 }
