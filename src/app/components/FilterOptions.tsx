@@ -42,10 +42,10 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
             <button
               key={option}
               onClick={() => handleHealthOptionChange(option)}
-              className={`px-3 py-1 rounded ${
+              className={`px-3 py-1 rounded border border-lime-500 ${
                 healthOptions.includes(option)
                   ? 'bg-lime-500 text-white'
-                  : 'bg-white text-lime-700 border border-lime-500'
+                  : 'bg-white text-lime-700'
               }`}
             >
               {option}

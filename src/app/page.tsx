@@ -96,7 +96,7 @@ export default function Home() {
           />
           <button
             onClick={handleSearch}
-            className="w-full bg-lime-500 text-white py-2 px-4 rounded-md hover:bg-lime-500 transition-colors disabled:bg-lime-100 disabled:cursor-not-allowed"
+            className="w-full px-4 py-2 bg-lime-500 text-white rounded-md hover:text-white hover:bg-lime-600 focus:outline-none focus:ring-1 focus:ring-lime-500 disabled:bg-lime-200 disabled:cursor-not-allowed disabled:text-lime-600"
             disabled={ingredients.length === 0}
           >
             Search Recipes

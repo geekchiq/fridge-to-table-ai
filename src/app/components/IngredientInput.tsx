@@ -54,7 +54,7 @@ const IngredientInput: React.FC<IngredientInputProps> = ({
           />
           <button
             onClick={handleAddIngredient}
-            className="px-4 py-2 bg-lime-500 text-white rounded-r-md hover:bg-lime-600 focus:outline-none focus:ring-1 focus:ring-lime-500 disabled:bg-lime-200 disabled:cursor-not-allowed"
+            className="px-4 py-2.5 bg-lime-500 disabled:text-lime-600 text-white rounded-r-md hover:bg-lime-600 focus:outline-none focus:ring-1 focus:ring-lime-500 disabled:bg-lime-200 disabled:cursor-not-allowed"
             disabled={inputValue.length < 2}
           >
             Add
