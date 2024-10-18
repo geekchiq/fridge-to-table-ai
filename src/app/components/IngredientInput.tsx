@@ -65,13 +65,13 @@ const IngredientInput: React.FC<IngredientInputProps> = ({
         {ingredients.map((ingredient, index) => (
           <div
             key={index}
-            className="relative bg-gray-100 px-3 py-2 rounded-md pl-5"
+            className="flex flex-row bg-gray-100 px-3 py-2 rounded-md justify-start"
           >
             <button
               onClick={() => handleRemoveIngredient(index)}
-              className="absolute text-sm top-1 left-2 text-red-500 hover:text-red-700 focus:outline-none"
+              className="text-[12px] mr-3 text-red-500 hover:text-red-700 focus:outline-none"
             >
-              x
+              ❌
             </button>
             <span>{ingredient}</span>
           </div>
