@@ -2,7 +2,6 @@ import { Recipe } from '@/types/recipe'
 
 interface RecipeListProps {
   recipes: Recipe[]
-  currentIngredients: string[]
 }
 
 /**

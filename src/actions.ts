@@ -1,3 +1,4 @@
+import { Recipe } from '@/types/recipe'
 import { fetchData } from '@/app/api/edamam'
 
 const apiKey = process.env.NEXT_PUBLIC_EDAMAM_API_KEY
@@ -14,7 +15,7 @@ interface RequestPayloadProps {
 // calls the api to get all the recipe data
 export const getRecipes = async (
   payload: RequestPayloadProps
-): Promise<unknown> => {
+): Promise<Recipe[]> => {
   const { ingredients, healthOptions, dietPreference } = payload
   let url = `${baseUrl}?type=public&app_id=${appId}&app_key=${apiKey}&q=${ingredients.join(
     ','
@@ -27,5 +28,6 @@ export const getRecipes = async (
     url = `${url}&diet=${dietPreference}`
   }
   const data = await fetchData(url)
+  console.log(data)
   return data
 }

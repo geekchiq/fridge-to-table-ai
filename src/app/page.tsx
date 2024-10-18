@@ -1,6 +1,6 @@
 'use client'
 
-import { IngredientLine, Recipe, RecipeData } from '@/types/recipe'
+import { IngredientLine, Recipe } from '@/types/recipe'
 import React, { useState } from 'react'
 
 import FilterOptions from '@/app/components/FilterOptions'
@@ -36,16 +36,17 @@ export default function Home() {
     })
 
     const newRecipeData: Recipe[] = []
-    recipeData?.forEach((recipe: RecipeData) => {
+    recipeData?.forEach((recipe) => {
       let existingCount = 0
+
       const ingredientLines = recipe.ingredientLines
       const newIngrLines: IngredientLine[] = []
-      ingredientLines?.forEach((ingr: string) => {
-        const existing = isCommonIngredient(ingredients, ingr)
+      ingredientLines?.forEach((ingr) => {
+        const existing = isCommonIngredient(ingredients, ingr.toString())
         if (existing) existingCount++
         newIngrLines.push({
           existing,
-          ingredient: ingr
+          ingredient: ingr.toString()
         })
       })
 
