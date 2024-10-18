@@ -47,3 +47,11 @@ bun dev
 ````
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+### Approach
+
+Used Claude AI to generate pages and design to help with quicker completion. The rest are from the knowledge I have learned from previous online courses.
+
+### Challenges
+
+Ive been using ReactJS for 5 years now but I only learnt NextJS last week. On this part, I usually get difficulties on the deployment build on Vercel but I discovered how to overcome it the next time.
