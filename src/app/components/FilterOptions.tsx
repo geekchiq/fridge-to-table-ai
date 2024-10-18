@@ -65,7 +65,7 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
 
           {DIETOPTIONS.map((option) => (
             <option value={option} key={option}>
-              {option}
+              {option.toUpperCase()}
             </option>
           ))}
         </select>
@@ -81,7 +81,7 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
           <option value="">No Preference</option>
           {MEALTYPEOPTIONS.map((option) => (
             <option value={option} key={option}>
-              {option}
+              {option.toUpperCase()}
             </option>
           ))}
         </select>
